@@ -1,0 +1,1431 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Skyrim Skill Perk Selector</title>
+    <script src="SkyrimDatabase.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        // Reference pages:
+        // 
+        // Javascript
+        //      http://www.redips.net/javascript/adding-table-rows-and-columns/
+        //      http://www.mredkj.com/tutorials/tutorial005.html
+        //      http: //stackoverflow.com/questions/901115/get-query-string-values-in-javascript
+        // Styles:
+        //      http://jsfiddle.net/zZDvq/
+
+
+
+
+
+        var SelectedPerks = new Array(75);
+        var CurrentSkillLevels = new Array();
+        var CurrentTypeFocus = new Array();
+        var CustomTypeFocus = new Array();
+        var MaxLevel = 71;
+        var SimulatorOn = true;
+        var CurrentRace = 1;
+        var CurrentLevel = 1;
+        var CurrentProgress = 0;
+        var RequiredProgress = 0;
+        var AvailablePerks = 0;
+        var TotalAvailable = 0;
+        var ShowedLevelWarning = false;
+        var DesiredPerksArray = new Array();
+
+        // For desired perks - keep track of progress on the fly - only update table when a change happens
+        function DesiredPerk(argPerkNumber) {
+            this.PerkNumber = argPerkNumber;
+            this.PerkNameHtml = "";
+            this.RequiredPerksHtml = "";     // String representing HTML for desired perks
+            this.LevelHtml = "";             // String representing HTML for level requirement
+        }
+
+        var urlParams = {}; 
+        
+        (function () {     
+            var e,         
+                a = /\+/g,  // Regex for replacing addition symbol with a space         
+                r = /([^&=]+)=?([^&]*)/g,         
+                d = function (s) { 
+                    return decodeURIComponent(s.replace(a, " ")); 
+                },         
+                q = window.location.search.substring(1);      
+                
+                while (e = r.exec(q))        
+                    urlParams[d(e[1])] = d(e[2]); 
+        })(); 
+
+
+
+        function start() {
+            var i;
+            var race;
+            // Initialize arrays
+
+            // Player Type starts with custom - assume all 3's
+            for (i = 1; i <= 18; ++i) {
+                CustomTypeFocus[i] = 3;
+                CurrentTypeFocus[i] = 3;
+            }
+
+            // Select - even if we have URL - this will ensure resets
+            SetSelectedRace(1);
+
+            // See if URL has what we need
+            if ("v" in urlParams) {
+                closeQuickHelp();
+
+                switch (Number(urlParams["v"])) {
+                    case 1:
+                        try
+                        {
+                            race = Number(urlParams["r"]);
+                            if ((race >=0) && (race<=10)) {
+                                SetSelectedRace(race);  // Have to do here - since resets everything
+                                var selectBox = document.getElementById("RaceSelection");
+                                if (race == 0)
+                                    selectBox.selectedIndex = 10;
+                                else
+                                    selectBox.selectedIndex = race-1;
+                                  
+
+                                haveRace = true;
+                            }
+
+                            // Add select perks next - since they decrement available perks
+                            if ("sp" in urlParams) {
+                                var selectedPerks = urlParams["sp"].split(",");
+
+                                for (i = 0; i < selectedPerks.length; ++i) {
+                                    var intValue = parseInt(selectedPerks[i], 16);
+
+                                    addPerk(intValue);
+                                }
+                            }
+
+                            // Add levl stuff
+                            CurrentLevel = Number(urlParams["cl"]);
+                            CurrentProgress = Number(urlParams["cp"]);
+                            AvailablePerks = Number(urlParams["ap"]);
+                            TotalAvailable = Number(urlParams["ta"]);
+
+                            var skillArray = urlParams["cs"].split(",");
+                            if (skillArray.length == 18) {
+                                for (i=0;i<18;++i)
+                                    CurrentSkillLevels[i+1] = Number(skillArray[i]);
+                            }
+                            UpdateSkillLevels();
+                            UpdateLevelProgress();
+
+                            // Add desired perks
+                            if ("dp" in urlParams) {
+                                var desiredPerks = urlParams["dp"].split(",");
+
+                                for (i = 0; i < desiredPerks.length; ++i) {
+                                    var intValue = parseInt(desiredPerks[i], 16);
+
+                                    DesiredPerksArray.push(new DesiredPerk(intValue));
+                                    addDesiredPerk(DesiredPerksArray.length - 1);
+                                }
+                            }
+                            evaluateDesiredPerks();
+
+                        }
+                        catch (err)
+                        {
+                            alert("Error parsing URL: " + err);
+                        }
+                        break;
+                    
+                }
+                
+            }
+
+        }
+
+        function SetSelectedRace(argRaceNumber) {
+            var skillsTable = document.getElementById("SkillLevels");
+            var statsTable = document.getElementById("LevelStats");
+            var i;
+
+            CurrentRace = argRaceNumber;
+            if (argRaceNumber == 0) {
+                SimulatorOn = false;
+                skillsTable.style.display = "none";
+                statsTable.style.display = "none";
+
+            } else {
+                SimulatorOn = true;
+                skillsTable.style.display = "block";
+                statsTable.style.display = "block";
+
+                // Get array of levels increases based on selection
+                var bonuses = RacialBonuses[argRaceNumber].split(",");
+
+                // Set All Levels
+                for (i = 1; i <= 18; ++i) {
+                    CurrentSkillLevels[i] = 15 + parseInt(bonuses[i - 1]);
+                }
+                UpdateSkillLevels();
+                
+                CurrentLevel = 1;
+                CurrentProgress = 0;
+                AvailablePerks = 0;
+                TotalAvailable = 0;
+                UpdateLevelProgress();
+            }
+
+            // Have to reset everything on race change
+            resetSelectedPerks();
+            displayAvailablePerks();
+            evaluateDesiredPerks();
+        }
+
+        function UpdateSkillDisplay(argSkillNumber) {
+            var tdCell;
+
+            tdCell = document.getElementById("sk" + argSkillNumber);
+            tdCell.innerHTML = CurrentSkillLevels[argSkillNumber];
+
+        }
+
+        function UpdateLevelProgress() {
+            var tdCell;
+            var progressPercent;
+
+            tdCell = document.getElementById("CurrentLevel");
+            tdCell.innerHTML = CurrentLevel
+            tdCell = document.getElementById("PerkCounter");
+            tdCell.innerHTML = AvailablePerks
+            tdCell = document.getElementById("LevelProgress");
+            if (CurrentLevel < 50) {
+                progressPercent = Math.floor(100 * CurrentProgress / 10);
+                RequiredProgress = 10 - CurrentProgress;
+            } else {
+                progressPercent = Math.floor(100 * CurrentProgress / 50);
+                RequiredProgress = 50 - CurrentProgress;
+            }
+            tdCell.innerHTML = progressPercent + " %";
+
+        }
+
+        function UpdateSkillLevels() {
+            var i;
+
+            for (i = 1; i <= 18; ++i)
+                UpdateSkillDisplay(i);
+        }
+
+        function BumpSkill(argSkillNumber) {
+            if (CurrentSkillLevels[argSkillNumber] < 100) {
+                CurrentSkillLevels[argSkillNumber] = CurrentSkillLevels[argSkillNumber] + 1;
+                UpdateSkillDisplay(argSkillNumber);
+                CurrentProgress = CurrentProgress + 1;
+                OnSkillIncrease(CurrentSkillLevels[argSkillNumber]);
+            }
+
+        }
+
+        // Function checks if level has been reached
+        function OnSkillIncrease(argNewSkillLevel) {
+            var newLevel = false;
+
+            if (CurrentLevel < 50) {
+                if (CurrentProgress == 10)
+                    newLevel = true;  
+            } else {
+                if (CurrentProgress == 50)
+                    newLevel = true;
+            }
+
+            if (newLevel)
+                OnNewLevel();
+            else if ((argNewSkillLevel % 5) == 0) {
+
+                UpdateLevelProgress();
+                displayAvailablePerks();
+                evaluateDesiredPerks();
+            }
+            else
+                UpdateLevelProgress();
+            
+        }
+
+        function OnNewLevel() {
+            CurrentLevel = CurrentLevel + 1;
+            CurrentProgress = 0;
+            AvailablePerks = AvailablePerks + 1;
+            TotalAvailable = TotalAvailable + 1;
+            UpdateLevelProgress();
+            displayAvailablePerks();
+            evaluateDesiredPerks();
+        }
+
+
+        function onRaceChange() {
+            var selectBox = document.getElementById("RaceSelection");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+            SetSelectedRace(selectedValue);
+        }
+        
+        function onTypeChange() {
+            var selectBox = document.getElementById("TypeSelection");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+            var i;
+
+            if (selectedValue == 0) {
+                for (i = 1; i <= 18; ++i)
+                    CurrentTypeFocus[i] = CustomTypeFocus[i];
+            } else {
+                // alert(selectedValue);
+                var focusLevels = PlayerType[selectedValue].split(",");
+
+                for (i = 1; i <= 18; ++i)
+                    CurrentTypeFocus[i] = focusLevels[i-1];
+            }
+
+        }
+
+        function onTemplateTypeChange() {
+            var selectBox = document.getElementById("CustomTypeTemplate");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+            var i;
+
+            if (selectedValue == 0)
+                return;
+            var focusLevels = PlayerType[selectedValue].split(",");
+
+            for (i = 1; i <= 18; ++i) {
+                comboBox = document.getElementById("CT" + i);
+                comboBox.selectedIndex = focusLevels[i - 1];
+            }
+
+        }
+
+
+        function getSkillNumberFromPerkNumber(argNumber) {
+            return Math.floor(argNumber / 100);
+        }
+
+
+        function getSkillNameFromPerkNumber(argNumber) {
+            return PerkNames[Math.floor(argNumber / 100)];
+        }
+
+        function resetSelectedPerks() {
+            var i;
+
+            for (i = 0; i < 75; ++i)
+                SelectedPerks[i] = 0;
+            currentNumberPerks = 0;
+        }
+
+        function resetPerkSystem() {
+            var tbl = document.getElementById("SelectedPerks");
+
+            // Restore perk number if simulating
+            if (SimulatorOn) {
+                AvailablePerks = TotalAvailable;
+                UpdateLevelProgress();
+            }
+
+            // reset perks
+            resetSelectedPerks();
+            deleteAllDataRows(tbl);
+            displayAvailablePerks();
+            evaluateDesiredPerks();
+        }
+
+        function isPerkSelcted(argPerkNumber) {
+            for (i = 0; i < currentNumberPerks; ++i) {
+                if (SelectedPerks[i] == argPerkNumber)
+                    return true;
+            }
+
+            return false;
+        }
+
+        // Function sees if perk is allowed based on level requirements
+        // Meaningess if level simulation is off
+        function isPerkAllowed(argPerkNumber) {
+            // Check simulator
+            if (!SimulatorOn)
+                return true;
+
+            // Check if we have any perks
+            if (AvailablePerks == 0)
+                return false;
+
+            // Check level
+            var skillIndex = getSkillNumberFromPerkNumber(argPerkNumber);
+            if (AllPerks[argPerkNumber].MinLevel <= CurrentSkillLevels[skillIndex])
+                return true;
+
+            return false;
+
+        }
+
+
+        // If required perk is 0 - means don't check 
+        // -1 = no requirement necessary
+        function isRequiredPerkSeleted(argRequiredPerk) {
+            if (argRequiredPerk == 0)
+                return false;
+            if (argRequiredPerk == -1)
+                return true;
+            return isPerkSelcted(argRequiredPerk);
+        }
+
+        function canPerkBeSelected(argPerkNumber) {
+            if (AvailablePerks == 0)
+                return false;
+            return isPerkAllowed(argPerkNumber) && (isRequiredPerkSeleted(AllPerks[argPerkNumber].RequiredPerkOne) || isRequiredPerkSeleted(AllPerks[argPerkNumber].RequiredPerkTwo));
+        }
+
+
+        function displayAvailablePerks() {
+            var tbl = document.getElementById("AvailablePerks");
+            var newRow;
+            var newCell;
+            var newText;
+            var newElement;
+            var lastPerkSkill = -1;
+            var shadeBackground = true; // Set as true since will be inverted on first perk
+            var perkNumber;
+
+            // Empty table
+            deleteAllDataRows(tbl);
+
+            // Make sure we can
+            if (currentNumberPerks >= 75)
+                return;
+            if (currentNumberPerks > MaxLevel)  // Since perks start at 2 - needs to be >
+                return;
+       
+
+            // Add them
+            for (var key in AllPerks) {
+
+                // alert(key + "  !isSelected:" + !isPerkSelcted(key) + "    PerkOne:" + isRequiredPerkSeleted(AllPerks[key].RequiredPerkOne) + "   PerkTwo:" + isRequiredPerkSeleted(AllPerks[key].RequiredPerkTwo));
+                if (!isPerkSelcted(key) && isPerkAllowed(key) && (isRequiredPerkSeleted(AllPerks[key].RequiredPerkOne) || isRequiredPerkSeleted(AllPerks[key].RequiredPerkTwo))) {
+                    newRow = tbl.insertRow(tbl.rows.length);
+
+                    perkNumber = getSkillNumberFromPerkNumber(AllPerks[key].PerkNumber);
+                    if (perkNumber != lastPerkSkill) {
+                        lastPerkSkill = perkNumber;
+                        shadeBackground = !shadeBackground;
+                    }
+
+                    if (shadeBackground)
+                        newRow.setAttribute("class", "trLightGray");
+
+                    // Add Skill Name
+                    newCell = newRow.insertCell(0);
+                    newText = document.createTextNode(getSkillNameFromPerkNumber(AllPerks[key].PerkNumber));
+                    newCell.appendChild(newText);
+
+                    // Add Perk Name
+                    newCell = newRow.insertCell(1);
+//                    newText = document.createTextNode(AllPerks[key].PerkName);
+//                    newCell.appendChild(newText);
+                    newElement = document.createElement("a");  // "<input type=\"button\" value=\"Add\" onClick=\"addPerk()\">");
+                    newElement.setAttribute("href", "javascript:addPerk(" + key + ");")
+                    newElement.appendChild(document.createTextNode(AllPerks[key].PerkName));
+                    newCell.appendChild(newElement);
+
+                    // Add Perk Name
+                    newCell = newRow.insertCell(2);
+                    newText = document.createTextNode(AllPerks[key].PerkDescription);
+                    newCell.appendChild(newText);
+
+                    // Add ACtion
+//                    newCell = newRow.insertCell(3);
+//                    newElement = document.createElement("input");  // "<input type=\"button\" value=\"Add\" onClick=\"addPerk()\">");
+//                    newElement.setAttribute("type", "button");
+//                    newElement.setAttribute("value", "Add");
+//                    newElement.setAttribute("onClick", "javascript:addPerk(" + key + ");");
+//                    newCell.appendChild(newElement);
+                }
+            }
+        }
+
+        function addPerk(argPerkId) {
+            // Add to array
+            SelectedPerks[currentNumberPerks] = argPerkId;
+            currentNumberPerks++;
+
+            // Add to selected perk table - since perks start at level 2 (I think) - increment by 1
+            addPerkToSelectionTable(currentNumberPerks + 1, argPerkId);
+
+            // Update Perks
+            if (SimulatorOn) {
+                AvailablePerks = AvailablePerks -1;
+                UpdateLevelProgress();
+            }
+
+            // Reset available
+            displayAvailablePerks();
+            evaluateDesiredPerks();
+
+
+        }
+
+        function addPerkToSelectionTable(argLevelNumber, argPerkNumber) {
+            var tbl = document.getElementById("SelectedPerks");
+            var newRow;
+            var newCell;
+            var newText;
+            var newElement;
+
+            newRow = tbl.insertRow(tbl.rows.length);
+
+            // Add level
+            newCell = newRow.insertCell(0);
+            // newText = document.createTextNode(argLevelNumber);
+            // newCell.appendChild(newText);
+            newElement = document.createElement("a");  // "<input type=\"button\" value=\"Add\" onClick=\"addPerk()\">");
+            newElement.setAttribute("href", "javascript:removePerk(" + argLevelNumber + ");")
+            newElement.appendChild(document.createTextNode(argLevelNumber));
+            newCell.appendChild(newElement);
+
+
+            // Add Skill Name
+            newCell = newRow.insertCell(1);
+            newText = document.createTextNode(getSkillNameFromPerkNumber(argPerkNumber));
+            newCell.appendChild(newText);
+
+            // Add Perk Name
+            newCell = newRow.insertCell(2);
+            newText = document.createTextNode(AllPerks[argPerkNumber].PerkName);
+            newCell.appendChild(newText);
+
+            // Add Perk Name
+            newCell = newRow.insertCell(3);
+            newText = document.createTextNode(AllPerks[argPerkNumber].PerkDescription);
+            newCell.appendChild(newText);
+
+            // Add ACtion
+//            newCell = newRow.insertCell(4);
+//            newElement = document.createElement("input");  // "<input type=\"button\" value=\"Add\" onClick=\"addPerk()\">");
+//            newElement.setAttribute("type", "button");
+//            newElement.setAttribute("value", "Remove");
+//            newElement.setAttribute("onClick", "javascript:removePerk(" + argLevelNumber + ");");
+//            newCell.appendChild(newElement);
+        }
+
+        function deleteAllDataRows(argTable) {
+            var lastRow = argTable.rows.length - 1;
+            var i;
+
+            for (i = lastRow; i > 0; i--)
+                argTable.deleteRow(i);
+        }
+
+        // Function removes perks starting at level N
+        // Since levels start at 2 - need to adjust accordingly
+        function removePerk(argLevelNumber) {
+            var tbl = document.getElementById("SelectedPerks");
+            var lastRow = tbl.rows.length - 1;
+            var i;
+
+            for (i = lastRow; i >= (argLevelNumber-1); i--)
+                tbl.deleteRow(i);
+
+            AvailablePerks+= currentNumberPerks - (argLevelNumber - 2);
+            currentNumberPerks = argLevelNumber - 2;
+
+            // Reset available
+            displayAvailablePerks();
+            evaluateDesiredPerks();
+            UpdateLevelProgress();
+        }
+
+        // Function advances level by randomly picking skills based on focus
+        // Only valid up to 50
+        // If skills are available - they are pushed into araray number of times their focus
+        // After array is full, a random skill is picked - like NBA lottery
+        //
+        //  Algorithm 2 - Slow as shit
+        //     10 trialLevels - each trial (but last checks against trialPercent - if true, then does only skills in that level
+        //        For example - start at TrialLevel 10 - if check is true - only get 10's and pick
+        //                      if not, go to TrialLevel 9 - if check is true - get 9's + 10's 
+        function advanceLevel() {
+            // Make sure ok
+//            if (CurrentLevel > 50) {
+//                alert("Not available after level 50.");
+//                return;
+            //            }
+
+            var countdown = RequiredProgress;
+            var i,j,trialLevel;                  // 1
+            var trialPercent = 7;           // 
+            var possibilityArray;
+            var insertCount;
+            
+            while (countdown > 0) {
+                possibilityArray = new Array();
+
+                // Get list of skills availability
+                for (i = 1; i <=18; ++i)
+                    if (CurrentSkillLevels[i] < 100) {
+                        // Add skills to array
+                        if (CurrentTypeFocus[i] == 10)
+                            insertCount = 200;
+                        else if (CurrentTypeFocus[i] > 5)
+                            insertCount = CurrentTypeFocus[i] * 3;
+                        else
+                            insertCount = CurrentTypeFocus[i]
+                        for (j = 0; j < CurrentTypeFocus[i]; ++j)
+                            possibilityArray.push(i);
+                    }
+
+                    if (possibilityArray.length == 0) {
+                        alert("No more skills to advance based on playing type");
+                        return;
+                    }
+
+                    // At this point we should have stack of skill increases - with focused items
+                // Having larger percentage of 
+                if (possibilityArray.length > 0) {
+                    i = Math.floor(Math.random() * possibilityArray.length);
+                    BumpSkill(possibilityArray[i]);
+                    // CurrentSkillLevels[i] = CurrentSkillLevels[i] + 1;
+                }
+
+
+                // Using trial level - slow
+                // for (trialLevel = 10;trialLevel >= 1;trialLevel --) {
+                //     // See if we should try this time
+                //     if ((trialLevel == 1) || (Math.floor(Math.random() * 100) <= trialPercent)) {
+                //         for (i = 1; i <=18; ++i) {
+                //             if ((CurrentSkillLevels[i] < 100) && (CurrentTypeFocus[i]>=trialLevel))
+                //                 possibilityArray.push(i);
+                //         }
+                //         if (possibilityArray.length == 0) {
+                //             if (trialLevel == 1) {
+                //                 alert("No more skills to advance");
+                //                 return;
+                //             }
+                //         } else {
+                //             i = Math.floor(Math.random() * possibilityArray.length);
+                //             BumpSkill(possibilityArray[i]);
+                //             trialLevel = 0; // Kill trial loop
+                //         }
+                // 
+                //     }
+                // }
+
+
+                // Decrement
+                countdown--;
+            }
+
+            if ((CurrentLevel >= 50) && !ShowedLevelWarning) {
+                var message;
+
+                if (CurrentLevel == 50)
+                    message = "You have have reached level 50.";
+                else
+                    message ="You are above level 50.";
+                alert(message + " In the game these levels will take much longer to achieve. For a realistic use of the simultor, do not advance much farther than 50 levels.");
+
+                ShowedLevelWarning = true;
+            }
+
+        }
+
+        function onCustomPlayingType() {
+            var customSelectorSection = document.getElementById("CustomTypeSelector");
+            var i;
+            var comboBox;
+            var selectBox = document.getElementById("CustomTypeTemplate");
+
+            selectBox.selectedIndex = 0;
+
+            for (i = 1; i <= 18; ++i) {
+                comboBox = document.getElementById("CT" + i);
+                comboBox.selectedIndex = CustomTypeFocus[i];
+            }
+            customSelectorSection.style.visibility = 'visible';
+        }
+
+        function acceptCustomTypes() {
+            var customSelectorSection = document.getElementById("CustomTypeSelector");
+
+            customSelectorSection.style.visibility = 'hidden';
+
+            // Get selections
+            for (i = 1; i <= 18; ++i) {
+                comboBox = document.getElementById("CT" + i);
+                CustomTypeFocus[i] = comboBox.selectedIndex;
+            }
+
+            // Force selection
+            var selectBox = document.getElementById("TypeSelection");
+            if (selectBox.selectedIndex != 0)
+                selectBox.selectedIndex = 0;
+            onTypeChange();
+        }
+        
+        function cancelCustomTypes() {
+            var customSelectorSection = document.getElementById("CustomTypeSelector");
+
+            customSelectorSection.style.visibility = 'hidden';
+        }
+
+        function clearWarriorFocus() {
+            for (i = 1; i <= 6; ++i) {
+                comboBox = document.getElementById("CT" + i);
+                comboBox.selectedIndex = 0;
+            }
+        }
+
+        function clearMageFocus() {
+            for (i = 7; i <= 12; ++i) {
+                comboBox = document.getElementById("CT" + i);
+                comboBox.selectedIndex = 0;
+            }
+        }
+
+        function clearThiefFocus() {
+            for (i = 13; i <= 18; ++i) {
+                comboBox = document.getElementById("CT" + i);
+                comboBox.selectedIndex = 0;
+            }
+        }
+
+        function isPerkDesired(argPerkNumber) {
+            var i;
+
+            for (i = 0; i < DesiredPerksArray.length; ++i) {
+                if (argPerkNumber == DesiredPerksArray[i].PerkNumber)
+                    return true;
+            }
+            return false;
+        }
+
+        function onAddDesiredPerk() {
+            var desiredPerkSelectorSection = document.getElementById("DesiredPerkSelector");
+            var i;
+            var selectBox = document.getElementById("DesiredPerkListBox");
+
+            desiredPerkSelectorSection.style.visibility = 'visible';
+
+            selectBox.options.length = 0;
+            for (var key in AllPerks) {
+                if (!isPerkDesired(key)) {
+                    var elOptNew = document.createElement('option');
+                    elOptNew.text = getSkillNameFromPerkNumber(key) + " - " + AllPerks[key].PerkName + " - " + AllPerks[key].PerkDescription + "(" + AllPerks[key].MinLevel + ")";
+                    elOptNew.value = key;
+
+                    try {
+                        selectBox.add(elOptNew, null); // standards compliant; doesn't work in IE
+                    }
+                    catch (ex) {
+                        selectBox.add(elOptNew); // IE only
+                    }
+                }
+            }
+        }
+
+        function onResetDesiredPerks() {
+            var tbl = document.getElementById("DesiredPerksTable");
+            var i;
+
+            DesiredPerksArray = new Array();
+            var lastRow = tbl.rows.length - 1;
+            for (i = lastRow; i >= 1; i--)
+                tbl.deleteRow(i);
+        }
+
+        function cancelDesiredPerkSelector() {
+            var customSelectorSection = document.getElementById("DesiredPerkSelector");
+
+            customSelectorSection.style.visibility = 'hidden';
+        }
+
+        function acceptDesiredPerkSelector() {
+            var desiredPerkSelectorSection = document.getElementById("DesiredPerkSelector");
+            var i;
+            var selectBox = document.getElementById("DesiredPerkListBox");
+
+            desiredPerkSelectorSection.style.visibility = 'hidden';
+
+            DesiredPerksArray.push(new DesiredPerk(selectBox.options[selectBox.selectedIndex].value));
+            addDesiredPerk(DesiredPerksArray.length - 1);
+            evaluateDesiredPerks();
+        }
+
+        // Function adds row based on value in desired perks array
+        // Just does filler values - evaluation will be done later
+        function addDesiredPerk(argPerkIndex) {
+            var tbl = document.getElementById("DesiredPerksTable");
+            var newRow;
+            var newCell;
+            var newText;
+            var newElement;
+            var perkNumber = DesiredPerksArray[argPerkIndex].PerkNumber;
+
+            newRow = tbl.insertRow(tbl.rows.length);
+
+            // Add Skill
+            newCell = newRow.insertCell(0);
+            if ((argPerkIndex % 2) == 1)
+                newCell.bgColor = "#CCCCCC";
+            newText = document.createTextNode(getSkillNameFromPerkNumber(perkNumber));
+            newCell.appendChild(newText);
+
+            // Add Perk Name
+            newCell = newRow.insertCell(1);
+            if ((argPerkIndex % 2) == 1)
+                newCell.bgColor = "#CCCCCC";
+            newText = document.createTextNode(AllPerks[perkNumber].PerkName);
+            newCell.appendChild(newText);
+
+
+            // Add Best Path
+            newCell = newRow.insertCell(2);
+            if ((argPerkIndex % 2) == 1)
+                newCell.bgColor = "#CCCCCC";
+            newCell.align = "center";
+            newText = document.createTextNode("");
+            newCell.appendChild(newText);
+
+            // Add Required Level
+            newCell = newRow.insertCell(3);
+            if ((argPerkIndex % 2) == 1)
+                newCell.bgColor = "#CCCCCC";
+            newCell.align = "right";
+            newText = document.createTextNode(AllPerks[perkNumber].MinLevel);
+            newCell.appendChild(newText);
+
+            // Add level
+            // newCell = newRow.insertCell(0);
+            // newText = document.createTextNode(argLevelNumber);
+            // newCell.appendChild(newText);
+            // newElement = document.createElement("a");  // "<input type=\"button\" value=\"Add\" onClick=\"addPerk()\">");
+            // newElement.setAttribute("href", "javascript:removeDesiredPerk(" + argPerkIndex + ");")
+            // newElement.appendChild(document.createTextNode(AllPerks[argPerkNumber].PerkDescription));
+            // newCell.appendChild(newElement);
+
+
+
+
+            // Add ACtion
+            //            newCell = newRow.insertCell(4);
+            //            newElement = document.createElement("input");  // "<input type=\"button\" value=\"Add\" onClick=\"addPerk()\">");
+            //            newElement.setAttribute("type", "button");
+            //            newElement.setAttribute("value", "Remove");
+            //            newElement.setAttribute("onClick", "javascript:removePerk(" + argLevelNumber + ");");
+            //            newCell.appendChild(newElement);
+        }
+
+        function openQuickHelp() {
+            var customSelectorSection = document.getElementById("QuickHelp");
+
+            customSelectorSection.style.visibility = 'visible';
+        }
+
+
+        function closeQuickHelp() {
+            var customSelectorSection = document.getElementById("QuickHelp");
+
+            customSelectorSection.style.visibility = 'hidden';
+        }
+
+        // Function saves to query string
+        //   r = race
+        //   cl = class
+        //   cp = currentProgress
+        //   ap = AvailablePerks
+        //   ta = TotalAvailable
+        //   cs = Current Skills
+        //   sp = Selected Perks
+        //   dp = Desired Perks 
+        function openSnapshot() {
+            var customSelectorSection = document.getElementById("Snapshot");
+            var textBox = document.getElementById("SnapshotTextbox");
+            var urlString = "http://www.anuconsulting.com/skyrim/skyrimperkpicker.html?v=1";
+            var i;
+            var temp;
+
+            // Generate URL
+
+            // Append basics
+            urlString = urlString + "&r=" + CurrentRace + "&cl=" + CurrentLevel + "&cp=" + CurrentProgress + "&ap=" + AvailablePerks + "&ta=" + TotalAvailable;
+
+            
+            // Append Current Skill Levels
+            for (i = 1; i <= 18; ++i) {
+                if (i == 1)
+                    temp = CurrentSkillLevels[i];
+                else
+                    temp = temp + "," + CurrentSkillLevels[i];
+            }
+            urlString = urlString + "&cs=" + temp;
+
+            // Apply selected perks
+            temp = ""
+            for (i = 0; i < 75; ++i)
+                if (SelectedPerks[i] > 0) {
+                    if (temp.length > 0)
+                        temp = temp + ",";
+                    temp = temp + (Number(SelectedPerks[i]).toString(16));
+                }
+            if (temp.length > 0)
+                urlString = urlString + "&sp=" + temp;
+                
+    
+            // Apply Desired Perks                
+            temp = ""
+            for (i = 0; i < DesiredPerksArray.length; ++i) {
+                if (temp.length > 0)
+                    temp = temp + ",";
+                // alert(Number(DesiredPerksArray[i].PerkNumber).toString(16));
+                temp = temp + (Number(DesiredPerksArray[i].PerkNumber).toString(16));
+                // alert(temp);
+            }
+            if (temp.length > 0)
+                urlString = urlString + "&dp=" + temp;
+
+
+            // Set it
+            textBox.value = urlString;
+
+            // Make sure visible
+            customSelectorSection.style.visibility = 'visible';
+        }
+
+
+        function closeSnapshot() {
+            var customSelectorSection = document.getElementById("Snapshot");
+
+            customSelectorSection.style.visibility = 'hidden';
+        }
+
+
+
+        // Function gets shortest path from this perk to perk that is already selected
+        function getShortestPathToPerk(argPerkNumber) {
+            var test1, test2;
+
+            // If either perk has a -1, then nothing is required
+            if ((AllPerks[argPerkNumber].RequiredPerkOne == -1) || (AllPerks[argPerkNumber].RequiredPerkTwo == -1))
+                return "";
+
+            // If we have either required perk - then we are good
+            if ((AllPerks[argPerkNumber].RequiredPerkOne != 0) && (isPerkSelcted(AllPerks[argPerkNumber].RequiredPerkOne)))
+                return "";
+            if ((AllPerks[argPerkNumber].RequiredPerkTwo != 0) && (isPerkSelcted(AllPerks[argPerkNumber].RequiredPerkTwo)))
+                return "";
+
+            test1 = getShortestPathToPerk(AllPerks[argPerkNumber].RequiredPerkOne) + "," + AllPerks[argPerkNumber].RequiredPerkOne;
+            if (AllPerks[argPerkNumber].RequiredPerkTwo != 0) {
+                test2 = getShortestPathToPerk(AllPerks[argPerkNumber].RequiredPerkTwo) + "," + AllPerks[argPerkNumber].RequiredPerkTwo;
+                if (test2.length < test1.length)
+                    test1 = test2;
+            }
+            return test1;
+        }
+
+
+        // Function checks each desired perk and see if any progress has been made
+        // Checks both skill level + required perks
+        // Rendering:
+        //   need - Bold Red
+        //   avaialble - blue
+        //   have - italic green
+        function evaluateDesiredPerks() {
+            var i,j;
+            var perkNumber;
+            var skillNumber;
+            var newSkillNameHtml;
+            var newPathHtml;
+            var newLevelHtml;
+            var tbl = document.getElementById("DesiredPerksTable");
+
+            for (i = 0; i < DesiredPerksArray.length; ++i) {
+                perkNumber = DesiredPerksArray[i].PerkNumber;
+                skillNumber = getSkillNumberFromPerkNumber(perkNumber);
+
+                // See if we already have it
+                if (isPerkSelcted(perkNumber)) {
+                    // Already have it is italic blue
+                    newSkillNameHtml = "<span style=\"color:green;\"><i>" + AllPerks[perkNumber].PerkName + "</i></span>";
+                    newLevelHtml = "<span style=\"color:green;\"><i>" + AllPerks[perkNumber].MinLevel + "</i></span>";
+                    newPathHtml = "<span style=\"color:green;\"><i>Achieved</i></span>";
+                } else {
+                    // Get New Path
+                    newPathHtml = getShortestPathToPerk(perkNumber);
+
+                    // Update skill - if path is empty means we can get to it
+                    if (newPathHtml == "") {
+                        newSkillNameHtml = "<span style=\"color:blue;\">" + AllPerks[perkNumber].PerkName + "</span>";
+                        newPathHtml = "<span style=\"color:blue;\">N/A</span>";
+                    }
+                    else {
+                        // set skill
+                        newSkillNameHtml = "<span style=\"color:red;\"><b>" + AllPerks[perkNumber].PerkName + "</b></span>";
+
+                        // Convert path to actual text
+                        var reqPerks = newPathHtml.split(",");
+
+                        //newPathHtml = "<span style=\"color:red;\"><b>";
+                        // First element is always empty string - so skip
+                        newPathHtml = "";
+                        for (j = 1; j < reqPerks.length; ++j) {
+                            // alert(reqPerks[j]);
+                            if (j > 1)
+                                newPathHtml = newPathHtml + "<br />";
+                            if (canPerkBeSelected(reqPerks[j])) 
+                                newPathHtml = newPathHtml + "<span style=\"color:blue;\">" + AllPerks[reqPerks[j]].PerkName + "</span>";
+                            else
+                                newPathHtml = newPathHtml + "<span style=\"color:red;\"><b>" + AllPerks[reqPerks[j]].PerkName + "</b></span>";
+                        }
+                        //newPathHtml = newPathHtml + "</b></span>";
+                    }
+
+                    // Check if skill level is high enough
+                    if ((CurrentSkillLevels[skillNumber] >= AllPerks[perkNumber].MinLevel) || !SimulatorOn) {
+                        newLevelHtml = "<span style=\"color:blue;\">" + AllPerks[perkNumber].MinLevel + "</span>";
+                    } else {
+                        newLevelHtml = "<span style=\"color:red;\"><b>" + AllPerks[perkNumber].MinLevel + "</b></span>";
+                    }
+                }
+
+                // Update Table
+                if (newSkillNameHtml != DesiredPerksArray[i].PerkNameHtml) {
+                    tbl.rows[i + 1].cells[1].innerHTML = newSkillNameHtml;
+                    DesiredPerksArray[i].PerkNameHtml = newSkillNameHtml;
+                }
+                if (newPathHtml != DesiredPerksArray[i].RequiredPerksHtml) {
+                    tbl.rows[i + 1].cells[2].innerHTML = newPathHtml;
+                    DesiredPerksArray[i].RequiredPerksHtml = newPathHtml;
+                }
+                if (newLevelHtml != DesiredPerksArray[i].LevelHtml) {
+                    tbl.rows[i + 1].cells[3].innerHTML = newLevelHtml;
+                    DesiredPerksArray[i].LevelHtml = newLevelHtml;
+                }
+                
+            }
+        }
+
+
+
+    </script>
+
+
+      <style type='text/css'>
+            .SkillTable {
+                width: 100%;
+                vertical-align: top;
+            }
+            .SkillTable td 
+            {
+            	vertical-align: top;
+            }
+            .PerkTable {
+                width: 100%;
+                border: 1px solid;
+                vertical-align: top;
+            }
+            .PerkTable td 
+            {
+            	vertical-align: top;
+            }
+
+            .SimulationTable {
+                width: 100%;
+                border: 2px solid green;
+                vertical-align: top;
+            }
+            .SimulationTable td 
+            {
+            	vertical-align: top;
+            }
+
+            .DesiredPerksAreaClass {
+                width: 100%;
+                border: 2px solid purple;
+                vertical-align: top;
+            }
+            .DesiredPerksAreaClass td 
+            {
+            	vertical-align: top;
+            }
+            .DesiredPerksTable 
+            {
+            	vertical-align: top;
+            }
+            .DesiredPerksTable td
+            {
+            	padding-left: 5px;
+            	padding-right: 5px;
+            	text-align: center;
+            }
+            .InnerTable {
+                width: 100%;
+            }
+            .InnerTable td {
+            }
+            .SpanClass {
+                display: block;
+                overflow: auto;
+                color: blue;
+            }
+            .trLightGray 
+            {
+            	background: LightGray;
+            }
+            	
+            .CustomTypeContainerTable {
+                width: 100%;
+                border: 1px solid;
+                vertical-align: top;
+            }
+
+  </style>
+
+</head>
+<body onload="start()">
+<div>
+
+<table width="100%">
+    <tr>
+        <td align="center"><h4>Skyrim Perk Selector - Beta Version 0.31 - For best result, use Firefox</h4></td>
+    </tr>
+</table>
+</div>
+<table>
+    <tr valign="top">
+        <td valign="top">
+            <!-- Create 2x3 table - top row is class/type selector (2 columns)
+                Second row is skills and summary table
+            -->
+            <table id="SimulationArea" class="SimulationTable">
+                <tr>
+                    <td colspan="3" align="center">
+                        Level Simulator (<i>may not reflect actual gameplay</i>)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        Race:   <select id="RaceSelection" onchange="onRaceChange();">
+                                    <option value="1">Altmer</option>
+                                    <option value="2">Argonian</option>
+                                    <option value="3">Bosmer</option>
+                                    <option value="4">Breton</option>
+                                    <option value="5">Dunmer</option>
+                                    <option value="6">Imperial</option>
+                                    <option value="7">Khajiit</option>
+                                    <option value="8">Nord</option>
+                                    <option value="9">Orc</option>
+                                    <option value="10">Redguard</option>
+                                    <option value="0">TURN OFF SIMULATOR</option>
+                                </select>
+                        Playing Type:
+                               <select id="TypeSelection" onchange="onTypeChange();">
+                                    <option value="0">Custom</option>
+                                    <option value="1">Knight</option>
+                                    <option value="2">Barbarian</option>
+                                    <option value="3">Mage (Offensive)</option>
+                                    <option value="4">Mage (Defensive)</option>
+                                    <option value="5">Thief</option>
+                                    <option value="6">Assasin</option>
+                                    <option value="7">Jack of Trades</option>
+                                </select>
+                              <input type="button" value="Custom..." onclick="onCustomPlayingType();"/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td>  <!--- Skill Levels -->
+                        <table id="SkillLevels" class="SkillTable">
+                            <tr>
+                                <td><a href="javascript:BumpSkill(1);">One-Handed</a></td><td id="sk1">0</td>
+                                <td><a href="javascript:BumpSkill(7);">Restoration</a></td><td id="sk7">0</td>
+                                <td><a href="javascript:BumpSkill(13);">Light Armor</a></td><td id="sk13">0</td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:BumpSkill(2);">Two-Handed</a></td><td id="sk2">0</td>
+                                <td><a href="javascript:BumpSkill(8);">Destruction</a></td><td id="sk8">0</td>
+                                <td><a href="javascript:BumpSkill(14);">Sneak</a></td><td id="sk14">0</td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:BumpSkill(3);">Block</a></td><td id="sk3">0</td>
+                                <td><a href="javascript:BumpSkill(9);">Alteration</a></td><td id="sk9">0</td>
+                                <td><a href="javascript:BumpSkill(15);">Lockpicking</a></td><td id="sk15">0</td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:BumpSkill(4);">Smithing</a></td><td id="sk4">0</td>
+                                <td><a href="javascript:BumpSkill(10);">Illusion</a></td><td id="sk10">0</td>
+                                <td><a href="javascript:BumpSkill(16);">Pickpocket</a></td><td id="sk16">0</td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:BumpSkill(5);">Heavy Armor</a></td><td id="sk5">0</td>
+                                <td><a href="javascript:BumpSkill(11);">Conjuration</a></td><td id="sk11">0</td>
+                                <td><a href="javascript:BumpSkill(17);">Speech</a></td><td id="sk17">0</td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:BumpSkill(6);">Archery</a></td><td id="sk6">0</td>
+                                <td><a href="javascript:BumpSkill(12);">Enchanting</a></td><td id="sk12">0</td>
+                                <td><a href="javascript:BumpSkill(18);">Alchemy</a></td><td id="sk18">0</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td align="center" valign="middle">     <!-- Commands sections -->
+                        <input type="button" value="Advance" onclick="javascript:advanceLevel();" />
+                    </td>
+                    <td align="right">
+                        <table id="LevelStats">
+                            <tr><td align="center">Current Level</td></tr>
+                            <tr><td align="center" id="CurrentLevel">1</td></tr>
+                            <tr><td align="center">Available Perks</td></tr>
+                            <tr><td align="center" id="PerkCounter">0</td></tr>
+                            <tr><td align="center">Progress</td></tr>
+                            <tr><td align="center" id="LevelProgress">0</td></tr>
+                            
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <!-- Desired Perks -->
+            <table id="DesiredPerksArea" class="DesiredPerksAreaClass">
+                <tr>
+                    <td align="center">
+                        Desired Perks
+                    </td>
+                    <td align="right">
+                        <input type="button" value="Add" onclick="javascript:onAddDesiredPerk();" />
+                        <input type="button" value="Reset" onclick="javascript:onResetDesiredPerks();" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table id="DesiredPerksTable" border="1" width="100%">
+                            <tr><th>Skill</th><th>Perk</th><th>Best Path</th><th>Req. Level</th></tr> 
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+
+    </tr>
+    <tr>
+        <td valign="top">
+            <table id="AvailablePerks" class="PerkTable">
+                <tr><th>Skill</th><th>Perk</th><th>Description</th></tr>
+            </table>
+        </td>
+        <td valign="top">
+            <table id="SelectedPerks" class="PerkTable">
+                <tr><th>Level</th><th>Skill</th><th>Perk</th><th>Description</th></tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<div>
+<br /><br /><br />
+<table width="100%">
+    <tr>
+        <td align="center">
+            <input type="button" value="Simulator Snapshot" onclick="openSnapshot();" />
+            <input type="button" value="Open Quick Help" onclick="openQuickHelp();" />
+            <input type="button" value="Refresh Available" onclick="displayAvailablePerks();" />
+            <input type="button" value="Reset Perks" onclick="resetPerkSystem();" />
+        </td>
+    </tr>
+</table>
+</div>
+
+
+<!--- Custom Type Selection -->
+<div id="CustomTypeSelector" style="position: absolute; top: 70px; left: 70px; background-color: #DDDDDD; visibility: hidden;">
+    <table class="CustomTypeContainerTable">
+        <tr>
+            <td align="center" colspan="2">
+                      Playing Type:
+                               <select id="CustomTypeTemplate" onchange="onTemplateTypeChange();">
+                                    <option value="0" selected="selected">Select...</option>
+                                    <option value="1">Knight</option>
+                                    <option value="2">Barbarian</option>
+                                    <option value="3">Mage (Offensive)</option>
+                                    <option value="4">Mage (Defensive)</option>
+                                    <option value="5">Thief</option>
+                                    <option value="6">Assasin</option>
+                                    <option value="7">Jack of Trades</option>
+                                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                        <table id="CustomTypeOptions" class="SkillTable">
+                            <tr>
+                                <td>One-Handed</td><td><select id="CT1"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Restoration</td><td><select id="CT7"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Light Armor</td><td><select id="CT13"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Two-Handed</td><td><select id="CT2"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Destruction</td><td><select id="CT8"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Sneak</td><td><select id="CT14"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Block</td><td><select id="CT3"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Alteration</td><td><select id="CT9"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Lockpicking</td><td><select id="CT15"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Smithing</td><td><select id="CT4"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Illusion</td><td><select id="CT10"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Pickpocket</td><td><select id="CT16"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Heavy Armor</td><td><select id="CT5"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Conjuration</td><td><select id="CT11"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Speech</td><td><select id="CT17"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                            </tr>
+                            <tr>
+                                <td>Archery</td><td><select id="CT6"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Enchanting</td><td><select id="CT12"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                                <td>Alchemy</td><td><select id="CT18"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center"><input type="button" value="Clear Warrior" onclick="clearWarriorFocus();" /></td>
+                                <td colspan="2" align="center"><input type="button" value="Clear Mage" onclick="clearMageFocus();" /></td>
+                                <td colspan="2" align="center"><input type="button" value="Clear Thief" onclick="clearThiefFocus();" /></td>
+                            </tr>
+                        </table>
+            </td>
+        </tr>
+        <tr>
+        <td colspan="2">
+            <br />
+            <br />
+            For simulating level advancement, set the focus for each level. The higher <br />
+            the focus, the more likely that skill will level when pressing the Advance <br />
+            button (you can still advance skills manually). <br />
+            <br />
+            If you are never going to use a skill, set the value to 0. WARNING: Setting too <br />
+            many skills to 0 may stop the simulator from advancing levels.<br />
+            <br />
+            <br />
+            Go <a href="UsingLevelSimulator.htm"">here</a> for help.<br />
+            <br />
+            <br />
+        </td>
+
+        </tr>
+        <tr>
+            <td align="left"">
+            <input type="button" value="Cancel" onclick="cancelCustomTypes();" />
+            </td>
+            <td align="right">
+            <input type="button" value="Accept" onclick="acceptCustomTypes();" />
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+<div id="footer">
+<br />
+<br />
+<br />
+<p align="center">
+Using the <a href="UsingLevelSimulator.htm">Level Simulator</a><br />
+<a href="VersionHistory.html">Version History</a><br />
+History and instructions available at <a href="http://theskyrimblog.ning.com/profile/RoarkSG">http://theskyrimblog.ning.com/profile/RoarkSG</a><br />
+Email bugs, suggestions, and comments to HowardRoarkSG at yahoo.com
+</p>
+</div>
+
+<!-- Desired Perk Selector -->
+<div id="DesiredPerkSelector" style="position: absolute; top: 70px; left: 5px; background-color: #DDDDDD; visibility: hidden;">
+    <table class="CustomTypeContainerTable">
+        <tr>
+            <td colspan="2">
+                Select Perk: <select id="DesiredPerkListBox"></select>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+            <input type="button" value="Cancel" onclick="cancelDesiredPerkSelector();" />
+            </td>
+            <td align="right">
+            <input type="button" value="Accept" onclick="acceptDesiredPerkSelector();" />
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<!-- Quick Help Section -->
+<div id="QuickHelp" style="position: absolute; top: 10px; left: 10px; padding:5px; background-color: #DDDDDD; visibility: visible; border: 3px solid;">
+    <h2>
+    SKYRIM PERK SELECTOR Quick Help
+    </h2>
+    <p>
+    This tool will help you map out your character when playing Skyrim, focusing on perk selection. To
+    get the most out of the tool, following the instructions for the category below that best describes
+    what you want to do.
+    </p>
+    <h4>I just want to pick perks, and get a feel for level progression</h4>
+        <ul>
+            <li>In the level progression area, select TURN OFF SIMULATOR for Race. This will close the level progression area.</li>
+            <li>Select the perks you want. As you select a perk, more perks will become available as you unlock them.</li>
+        </ul>
+    <h4>I want to see what perks I'll get based on how I plan to play the game</h4>
+        <ul>
+            <li>In the level progression area, select your race.</li>
+            <li>Select a Playing Type that resembles how you are going to play. Or, press the Custom button 
+                to select which skills you plan on focusing on.</li>
+            <li>Press the Advance button to level up randomly. As you level up, perks will become available.</li>
+        </ul>
+    <h4>I know what perks I want - how do I get them?</h4>
+        <ul>
+            <li>In the desired perks section, select the perks you want. Each perk will tell you what skill level and other perks are required.</li>
+            <li>Create a custom type focusing on the skills you will need and press the Advance button to level up.</li>
+            <li>Select the perks you need and see if you can get them all!</li>
+        </ul>
+
+    <table width="100%">
+        <tr>
+            <td align="center">
+                <input type="button" value="Close" onclick="closeQuickHelp();" />
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<!-- Snapshot Section Help Section -->
+<div id="Snapshot" style="position: absolute; top: 100px; left: 100px; padding:5px; background-color: #DDDDDD; visibility: hidden; border: 3px solid;">
+    <p>
+    Use the URL below as a snapshot of your character creation. Please note that this will be a version 1 snapshot. <br />
+    Once the algorithms of the game are known, this simulator may change, and the snapshot may not be 100% forward compatible. <br />
+    <font color="red"><b>PLEASE COPY THE ENTIRE URL!</b></font>
+    </p>
+    <table width="100%">
+        <tr>
+            <td align="center">
+                <input type="button" value="Close" onclick="closeSnapshot();" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea id="SnapshotTextbox" readonly="readonly" cols="100" rows="3"/>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body >
+
+</html>

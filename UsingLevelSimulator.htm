@@ -1,0 +1,1458 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 12">
+<meta name=Originator content="Microsoft Word 12">
+<link rel=File-List href="UsingLevelSimulator_files/filelist.xml">
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Scott</o:Author>
+  <o:LastAuthor>Scott</o:LastAuthor>
+  <o:Revision>14</o:Revision>
+  <o:TotalTime>946</o:TotalTime>
+  <o:Created>2011-11-06T10:02:00Z</o:Created>
+  <o:LastSaved>2011-11-07T01:18:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>610</o:Words>
+  <o:Characters>3480</o:Characters>
+  <o:Lines>29</o:Lines>
+  <o:Paragraphs>8</o:Paragraphs>
+  <o:CharactersWithSpaces>4082</o:CharactersWithSpaces>
+  <o:Version>12.00</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<link rel=themeData href="UsingLevelSimulator_files/themedata.thmx">
+<link rel=colorSchemeMapping
+href="UsingLevelSimulator_files/colorschememapping.xml">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:DontVertAlignCellWithSp/>
+   <w:DontBreakConstrainedForcedTables/>
+   <w:DontVertAlignInTxbx/>
+   <w:Word11KerningPairs/>
+   <w:CachedColBalance/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:1;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:variable;
+	mso-font-signature:0 0 0 0 0 0;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:-1610611985 1073741899 0 0 415 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520092929 1073786111 9 0 415 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+h2
+	{mso-style-priority:9;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 2 Char";
+	mso-style-next:Normal;
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:13.0pt;
+	font-family:"Cambria","serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#4F81BD;
+	mso-themecolor:accent1;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	mso-themecolor:hyperlink;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:purple;
+	mso-themecolor:followedhyperlink;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:.5in;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:.5in;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 2";
+	mso-ansi-font-size:13.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:"Cambria","serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#4F81BD;
+	mso-themecolor:accent1;
+	font-weight:bold;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+.MsoPapDefault
+	{mso-style-type:export-only;
+	margin-bottom:10.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:1005012612;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1853326896 -759897794 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+@list l1
+	{mso-list-id:1708405964;
+	mso-list-type:hybrid;
+	mso-list-template-ids:633385056 1193962526 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l1:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+@list l2
+	{mso-list-id:1885098623;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1701149520 1101014470 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l2:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+@list l2:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin-top:0in;
+	mso-para-margin-right:0in;
+	mso-para-margin-bottom:10.0pt;
+	mso-para-margin-left:0in;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+table.MsoTableGrid
+	{mso-style-name:"Table Grid";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-priority:59;
+	mso-style-unhide:no;
+	border:solid windowtext 1.0pt;
+	mso-border-alt:solid windowtext .5pt;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-border-insideh:.5pt solid windowtext;
+	mso-border-insidev:.5pt solid windowtext;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+table.MsoTableLightGrid
+	{mso-style-name:"Light Grid";
+	mso-tstyle-rowband-size:1;
+	mso-tstyle-colband-size:1;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	border:solid black 1.0pt;
+	mso-border-themecolor:text1;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-border-insideh:1.0pt solid black;
+	mso-border-insideh-themecolor:text1;
+	mso-border-insidev:1.0pt solid black;
+	mso-border-insidev-themecolor:text1;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+table.MsoTableLightGridFirstRow
+	{mso-style-name:"Light Grid";
+	mso-table-condition:first-row;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	mso-tstyle-border-top:1.0pt solid black;
+	mso-tstyle-border-top-themecolor:text1;
+	mso-tstyle-border-left:1.0pt solid black;
+	mso-tstyle-border-left-themecolor:text1;
+	mso-tstyle-border-bottom:2.25pt solid black;
+	mso-tstyle-border-bottom-themecolor:text1;
+	mso-tstyle-border-right:1.0pt solid black;
+	mso-tstyle-border-right-themecolor:text1;
+	mso-tstyle-border-insideh:cell-none;
+	mso-tstyle-border-insidev:1.0pt solid black;
+	mso-tstyle-border-insidev-themecolor:text1;
+	mso-para-margin-top:0in;
+	mso-para-margin-bottom:0in;
+	mso-para-margin-bottom:.0001pt;
+	line-height:normal;
+	font-family:"Tahoma","sans-serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightGridLastRow
+	{mso-style-name:"Light Grid";
+	mso-table-condition:last-row;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	mso-tstyle-border-top:2.25pt double black;
+	mso-tstyle-border-top-themecolor:text1;
+	mso-tstyle-border-left:1.0pt solid black;
+	mso-tstyle-border-left-themecolor:text1;
+	mso-tstyle-border-bottom:1.0pt solid black;
+	mso-tstyle-border-bottom-themecolor:text1;
+	mso-tstyle-border-right:1.0pt solid black;
+	mso-tstyle-border-right-themecolor:text1;
+	mso-tstyle-border-insideh:cell-none;
+	mso-tstyle-border-insidev:1.0pt solid black;
+	mso-tstyle-border-insidev-themecolor:text1;
+	mso-para-margin-top:0in;
+	mso-para-margin-bottom:0in;
+	mso-para-margin-bottom:.0001pt;
+	line-height:normal;
+	font-family:"Tahoma","sans-serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightGridFirstCol
+	{mso-style-name:"Light Grid";
+	mso-table-condition:first-column;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	font-family:"Tahoma","sans-serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightGridLastCol
+	{mso-style-name:"Light Grid";
+	mso-table-condition:last-column;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	mso-tstyle-border-top:1.0pt solid black;
+	mso-tstyle-border-top-themecolor:text1;
+	mso-tstyle-border-left:1.0pt solid black;
+	mso-tstyle-border-left-themecolor:text1;
+	mso-tstyle-border-bottom:1.0pt solid black;
+	mso-tstyle-border-bottom-themecolor:text1;
+	mso-tstyle-border-right:1.0pt solid black;
+	mso-tstyle-border-right-themecolor:text1;
+	font-family:"Tahoma","sans-serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightGridOddColumn
+	{mso-style-name:"Light Grid";
+	mso-table-condition:odd-column;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	mso-tstyle-shading:silver;
+	mso-tstyle-shading-themecolor:text1;
+	mso-tstyle-shading-themetint:63;
+	mso-tstyle-border-top:1.0pt solid black;
+	mso-tstyle-border-top-themecolor:text1;
+	mso-tstyle-border-left:1.0pt solid black;
+	mso-tstyle-border-left-themecolor:text1;
+	mso-tstyle-border-bottom:1.0pt solid black;
+	mso-tstyle-border-bottom-themecolor:text1;
+	mso-tstyle-border-right:1.0pt solid black;
+	mso-tstyle-border-right-themecolor:text1;}
+table.MsoTableLightGridOddRow
+	{mso-style-name:"Light Grid";
+	mso-table-condition:odd-row;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	mso-tstyle-shading:silver;
+	mso-tstyle-shading-themecolor:text1;
+	mso-tstyle-shading-themetint:63;
+	mso-tstyle-border-top:1.0pt solid black;
+	mso-tstyle-border-top-themecolor:text1;
+	mso-tstyle-border-left:1.0pt solid black;
+	mso-tstyle-border-left-themecolor:text1;
+	mso-tstyle-border-bottom:1.0pt solid black;
+	mso-tstyle-border-bottom-themecolor:text1;
+	mso-tstyle-border-right:1.0pt solid black;
+	mso-tstyle-border-right-themecolor:text1;
+	mso-tstyle-border-insidev:1.0pt solid black;
+	mso-tstyle-border-insidev-themecolor:text1;}
+table.MsoTableLightGridEvenRow
+	{mso-style-name:"Light Grid";
+	mso-table-condition:even-row;
+	mso-style-priority:62;
+	mso-style-unhide:no;
+	mso-tstyle-border-top:1.0pt solid black;
+	mso-tstyle-border-top-themecolor:text1;
+	mso-tstyle-border-left:1.0pt solid black;
+	mso-tstyle-border-left-themecolor:text1;
+	mso-tstyle-border-bottom:1.0pt solid black;
+	mso-tstyle-border-bottom-themecolor:text1;
+	mso-tstyle-border-right:1.0pt solid black;
+	mso-tstyle-border-right-themecolor:text1;
+	mso-tstyle-border-insidev:1.0pt solid black;
+	mso-tstyle-border-insidev-themecolor:text1;}
+table.MsoTableLightListAccent1
+	{mso-style-name:"Light List - Accent 1";
+	mso-tstyle-rowband-size:1;
+	mso-tstyle-colband-size:1;
+	mso-style-priority:61;
+	mso-style-unhide:no;
+	border:solid #4F81BD 1.0pt;
+	mso-border-themecolor:accent1;
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+table.MsoTableLightListAccent1FirstRow
+	{mso-style-name:"Light List - Accent 1";
+	mso-table-condition:first-row;
+	mso-style-priority:61;
+	mso-style-unhide:no;
+	mso-tstyle-shading:#4F81BD;
+	mso-tstyle-shading-themecolor:accent1;
+	mso-para-margin-top:0in;
+	mso-para-margin-bottom:0in;
+	mso-para-margin-bottom:.0001pt;
+	line-height:normal;
+	color:white;
+	mso-themecolor:background1;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightListAccent1LastRow
+	{mso-style-name:"Light List - Accent 1";
+	mso-table-condition:last-row;
+	mso-style-priority:61;
+	mso-style-unhide:no;
+	mso-tstyle-border-top:2.25pt double #4F81BD;
+	mso-tstyle-border-top-themecolor:accent1;
+	mso-tstyle-border-left:1.0pt solid #4F81BD;
+	mso-tstyle-border-left-themecolor:accent1;
+	mso-tstyle-border-bottom:1.0pt solid #4F81BD;
+	mso-tstyle-border-bottom-themecolor:accent1;
+	mso-tstyle-border-right:1.0pt solid #4F81BD;
+	mso-tstyle-border-right-themecolor:accent1;
+	mso-para-margin-top:0in;
+	mso-para-margin-bottom:0in;
+	mso-para-margin-bottom:.0001pt;
+	line-height:normal;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightListAccent1FirstCol
+	{mso-style-name:"Light List - Accent 1";
+	mso-table-condition:first-column;
+	mso-style-priority:61;
+	mso-style-unhide:no;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightListAccent1LastCol
+	{mso-style-name:"Light List - Accent 1";
+	mso-table-condition:last-column;
+	mso-style-priority:61;
+	mso-style-unhide:no;
+	mso-ansi-font-weight:bold;
+	mso-bidi-font-weight:bold;}
+table.MsoTableLightListAccent1OddColumn
+	{mso-style-name:"Light List - Accent 1";
+	mso-table-condition:odd-column;
+	mso-style-priority:61;
+	mso-style-unhide:no;
+	mso-tstyle-border-top:1.0pt solid #4F81BD;
+	mso-tstyle-border-top-themecolor:accent1;
+	mso-tstyle-border-left:1.0pt solid #4F81BD;
+	mso-tstyle-border-left-themecolor:accent1;
+	mso-tstyle-border-bottom:1.0pt solid #4F81BD;
+	mso-tstyle-border-bottom-themecolor:accent1;
+	mso-tstyle-border-right:1.0pt solid #4F81BD;
+	mso-tstyle-border-right-themecolor:accent1;}
+table.MsoTableLightListAccent1OddRow
+	{mso-style-name:"Light List - Accent 1";
+	mso-table-condition:odd-row;
+	mso-style-priority:61;
+	mso-style-unhide:no;
+	mso-tstyle-border-top:1.0pt solid #4F81BD;
+	mso-tstyle-border-top-themecolor:accent1;
+	mso-tstyle-border-left:1.0pt solid #4F81BD;
+	mso-tstyle-border-left-themecolor:accent1;
+	mso-tstyle-border-bottom:1.0pt solid #4F81BD;
+	mso-tstyle-border-bottom-themecolor:accent1;
+	mso-tstyle-border-right:1.0pt solid #4F81BD;
+	mso-tstyle-border-right-themecolor:accent1;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+normal'>Using the Leveling Simulator (Unedited Version)<o:p></o:p></b></p>
+
+<p class=MsoNormal>The Leveling engine allows you to simulate leveling up,
+based on a style of play. The purpose of the engine is <span class=GramE>an
+attempt to simulate what perks are</span> available to you based on perk skill
+requirements. For example, if you do nothing but Conjurations spells, when you
+reach level 100, you will have over 5 perk points to choose from. But you will
+never be able to choose “Heavy Armor – <span class=SpellE>Armsman</span> (Level
+2)”, because it requires a minimum skill of 40 in Heavy Armor, which you haven’t
+achieved. </p>
+
+<p class=MsoNormal>The instructions are split into two sections, 1) How to use
+the simulator, 2) Assumptions I made on how <span class=SpellE>Skyrim</span>
+works.</p>
+
+<h2 align=center style='text-align:center'>Using the Simulator</h2>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>The simulator attempts to mimic level progression based on a
+playing style. This would be similar to a class, but it really just defines
+what skills you are going to focus on. The following styles are available, but
+you can create your own. Each offered style has the following categories:</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Major Focus: Skills you are going to use all the
+time</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Minor Focus: Skills you are going to use some of
+the time</p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Ignores Focus: Skills you will never use until
+your major/minor are maxed</p>
+
+<table class=MsoTableLightGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid black 1.0pt;
+ mso-border-themecolor:text1;mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr style='mso-yfti-irow:-1;mso-yfti-firstrow:yes'>
+  <td width=160 valign=top style='width:119.7pt;border:solid black 1.0pt;
+  mso-border-themecolor:text1;border-bottom:solid black 2.25pt;mso-border-bottom-themecolor:
+  text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal;mso-yfti-cnfc:5'><b><span
+  style='font-family:"Cambria","serif";mso-ascii-theme-font:major-latin;
+  mso-fareast-font-family:"Times New Roman";mso-fareast-theme-font:major-fareast;
+  mso-hansi-theme-font:major-latin;mso-bidi-font-family:"Times New Roman";
+  mso-bidi-theme-font:major-bidi'>Type<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:solid black 1.0pt;
+  mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 2.25pt;
+  mso-border-bottom-themecolor:text1;border-right:solid black 1.0pt;mso-border-right-themecolor:
+  text1;mso-border-left-alt:solid black 1.0pt;mso-border-left-themecolor:text1;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal;mso-yfti-cnfc:1'><b><span
+  style='font-family:"Cambria","serif";mso-ascii-theme-font:major-latin;
+  mso-fareast-font-family:"Times New Roman";mso-fareast-theme-font:major-fareast;
+  mso-hansi-theme-font:major-latin;mso-bidi-font-family:"Times New Roman";
+  mso-bidi-theme-font:major-bidi'>Major Focus<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:solid black 1.0pt;
+  mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 2.25pt;
+  mso-border-bottom-themecolor:text1;border-right:solid black 1.0pt;mso-border-right-themecolor:
+  text1;mso-border-left-alt:solid black 1.0pt;mso-border-left-themecolor:text1;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal;mso-yfti-cnfc:1'><b><span
+  style='font-family:"Cambria","serif";mso-ascii-theme-font:major-latin;
+  mso-fareast-font-family:"Times New Roman";mso-fareast-theme-font:major-fareast;
+  mso-hansi-theme-font:major-latin;mso-bidi-font-family:"Times New Roman";
+  mso-bidi-theme-font:major-bidi'>Minor Focus<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:solid black 1.0pt;
+  mso-border-top-themecolor:text1;border-left:none;border-bottom:solid black 2.25pt;
+  mso-border-bottom-themecolor:text1;border-right:solid black 1.0pt;mso-border-right-themecolor:
+  text1;mso-border-left-alt:solid black 1.0pt;mso-border-left-themecolor:text1;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
+  text-align:center;line-height:normal;mso-yfti-cnfc:1'><b><span
+  style='font-family:"Cambria","serif";mso-ascii-theme-font:major-latin;
+  mso-fareast-font-family:"Times New Roman";mso-fareast-theme-font:major-fareast;
+  mso-hansi-theme-font:major-latin;mso-bidi-font-family:"Times New Roman";
+  mso-bidi-theme-font:major-bidi'>Ignores<o:p></o:p></span></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:0'>
+  <td width=160 valign=top style='width:119.7pt;border:solid black 1.0pt;
+  mso-border-themecolor:text1;border-top:none;mso-border-top-alt:solid black 1.0pt;
+  mso-border-top-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:68'><b><span style='font-family:"Cambria","serif";
+  mso-ascii-theme-font:major-latin;mso-fareast-font-family:"Times New Roman";
+  mso-fareast-theme-font:major-fareast;mso-hansi-theme-font:major-latin;
+  mso-bidi-font-family:"Times New Roman";mso-bidi-theme-font:major-bidi'>Knight<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>One-Handed</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Block</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Heavy Armor</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'><span class=SpellE>Smithing</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Alchemy</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Restoration</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Sneak</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Pickpocket</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Conjuration</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=160 valign=top style='width:119.7pt;border:solid black 1.0pt;
+  mso-border-themecolor:text1;border-top:none;mso-border-top-alt:solid black 1.0pt;
+  mso-border-top-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:132'><b><span style='font-family:"Cambria","serif";
+  mso-ascii-theme-font:major-latin;mso-fareast-font-family:"Times New Roman";
+  mso-fareast-theme-font:major-fareast;mso-hansi-theme-font:major-latin;
+  mso-bidi-font-family:"Times New Roman";mso-bidi-theme-font:major-bidi'>Barbarian<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Two-Handed</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'><span class=SpellE>Smithing</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Light Armor</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Archery</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Enchanting</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Alteration</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Sneak</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Pickpocket</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Illusion</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=160 valign=top style='width:119.7pt;border:solid black 1.0pt;
+  mso-border-themecolor:text1;border-top:none;mso-border-top-alt:solid black 1.0pt;
+  mso-border-top-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:68'><b><span style='font-family:"Cambria","serif";
+  mso-ascii-theme-font:major-latin;mso-fareast-font-family:"Times New Roman";
+  mso-fareast-theme-font:major-fareast;mso-hansi-theme-font:major-latin;
+  mso-bidi-font-family:"Times New Roman";mso-bidi-theme-font:major-bidi'>Mage
+  (Offensive)<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Destruction</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Restoration</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Alteration</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Light Armor</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>One-Handed</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Enchanting</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Heavy Armor</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Two-Handed</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Block</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=160 valign=top style='width:119.7pt;border:solid black 1.0pt;
+  mso-border-themecolor:text1;border-top:none;mso-border-top-alt:solid black 1.0pt;
+  mso-border-top-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:132'><b><span style='font-family:"Cambria","serif";
+  mso-ascii-theme-font:major-latin;mso-fareast-font-family:"Times New Roman";
+  mso-fareast-theme-font:major-fareast;mso-hansi-theme-font:major-latin;
+  mso-bidi-font-family:"Times New Roman";mso-bidi-theme-font:major-bidi'>Mage
+  (Defensive)<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Restoration</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Illusion</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Conjuration</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Destruction</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Light Armor</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Alteration</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Pickpocket</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Heavy Armor</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Two-Handed</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=160 valign=top style='width:119.7pt;border:solid black 1.0pt;
+  mso-border-themecolor:text1;border-top:none;mso-border-top-alt:solid black 1.0pt;
+  mso-border-top-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:68'><b><span style='font-family:"Cambria","serif";
+  mso-ascii-theme-font:major-latin;mso-fareast-font-family:"Times New Roman";
+  mso-fareast-theme-font:major-fareast;mso-hansi-theme-font:major-latin;
+  mso-bidi-font-family:"Times New Roman";mso-bidi-theme-font:major-bidi'>Thief<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Pickpocket</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Sneak</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Light Armor</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>One-Handed</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Archery</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Alchemy</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;background:silver;mso-background-themecolor:
+  text1;mso-background-themetint:63;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Heavy Amor</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'>Two-Handed</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:64'><span class=SpellE>Smithing</span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=160 valign=top style='width:119.7pt;border:solid black 1.0pt;
+  mso-border-themecolor:text1;border-top:none;mso-border-top-alt:solid black 1.0pt;
+  mso-border-top-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:132'><b><span style='font-family:"Cambria","serif";
+  mso-ascii-theme-font:major-latin;mso-fareast-font-family:"Times New Roman";
+  mso-fareast-theme-font:major-fareast;mso-hansi-theme-font:major-latin;
+  mso-bidi-font-family:"Times New Roman";mso-bidi-theme-font:major-bidi'>Assassin<o:p></o:p></span></b></p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Sneak</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Archery</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>One-Handed</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Pickpocket</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Light Armor</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Alchemy</p>
+  </td>
+  <td width=160 valign=top style='width:119.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;mso-border-bottom-themecolor:text1;
+  border-right:solid black 1.0pt;mso-border-right-themecolor:text1;mso-border-top-alt:
+  solid black 1.0pt;mso-border-top-themecolor:text1;mso-border-left-alt:solid black 1.0pt;
+  mso-border-left-themecolor:text1;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Heavy Armor</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Two-Handed</p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal;mso-yfti-cnfc:128'>Block</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>This is accomplished mathematically by assigning each skill
+a Focus level, from 0 to 10, where 0=Ignores and 10=Major Focus. The general
+idea is that higher Focus skills are more likely to advance when pressing the Advance
+button. It is a random process, so you will get different results every time
+you try.</p>
+
+<p class=MsoNormal>Some things to keep in mind:</p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Selecting a new race resets your level back to 1</p>
+
+<p class=MsoListParagraphCxSpLast style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>You can change your playing type on the fly
+without resetting any perks. The new settings will be applied to future
+advancements.</p>
+
+<h2 align=center style='text-align:center'>Assumptions</h2>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>Since I haven’t played the game, I’m going off of news leaks
+and speculation. I will update the simulator when I learn more. </p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>I’m assuming that some levels are harder to
+level up than others, but that is <b style='mso-bidi-font-weight:normal'><span
+style='color:red'>NOT</span></b> a factor for this engine. For example, in
+Oblivion Restoration and Marksman took forever to level up, while (IMHO)
+Conjuration was way too fast. My guess is <span class=SpellE>Smithing</span>
+and Enchanting will take forever to reach 100.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>I’m assuming that it takes more effort to
+increase a skill the higher the skill level, i.e. it is more work to level a
+skill from 49 to 50 than from 19 to 20. The engine currently does <b
+style='mso-bidi-font-weight:normal'><span style='color:red'>NOT</span></b>
+factor this when advancing.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>It has been said that the theoretical limit is
+somewhere in the <span class=GramE>70’s .</span> The math I’m using stops at 71.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>Supposedly raising a skill from 49 to 50 makes
+you level faster than going from 19 to 20. Other sites claim 10 points per
+level. I’m going to use a simple level-gain to experience mapping algorithm to
+attempt to simulate it, but I’m completely guessing at the numbers. <b
+style='mso-bidi-font-weight:normal'>EDIT</b>: This is currently <b
+style='mso-bidi-font-weight:normal'><span style='color:red'>NOT</span></b>
+implemented – see below. </p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in;mso-list:l2 level1 lfo3'><![if !supportLists]><span
+style='font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:
+Symbol'><span style='mso-list:Ignore'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]>It is supposedly harder to level up once you
+reach level 50. There are 2 ways they can do this that I see (The engine uses
+the first):</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;mso-add-space:
+auto;text-indent:-.25in;mso-list:l2 level2 lfo3'><![if !supportLists]><span
+style='font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]><b style='mso-bidi-font-weight:normal'>Require
+more <span class=SpellE>xp</span> points to level</b>: Skills still level at
+the same rate, but it takes more <span class=SpellE>xp</span> points to level</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:1.0in;mso-add-space:
+auto;text-indent:-.25in;mso-list:l2 level2 lfo3'><![if !supportLists]><span
+style='font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]><b style='mso-bidi-font-weight:normal'>Skills
+take more actions to advance a single point</b>: Skills take longer to advance
+a single point, but the <span class=SpellE>xp</span>/points per level is the
+same</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:1.0in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l2 level2 lfo3'><![if !supportLists]><span
+style='font-family:"Courier New";mso-fareast-font-family:"Courier New"'><span
+style='mso-list:Ignore'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span></span><![endif]><b style='mso-bidi-font-weight:normal'>Edit</b>:
+I found this post which looks reasonable to me (<a
+href="http://www.reddit.com/r/skyrim/comments/m1m4e/trying_to_figure_out_if_starting_skill_bonuses/">http://www.reddit.com/r/skyrim/comments/m1m4e/trying_to_figure_out_if_starting_skill_bonuses/</a>
+<span class=GramE>) ,</span> so I’m going with the 10/50 approach.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+</div>
+
+</body>
+
+</html>
